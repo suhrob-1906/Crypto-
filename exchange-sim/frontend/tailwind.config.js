@@ -1,0 +1,1 @@
+export default { content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"], theme: { extend: { colors: { panel: "#1a1d24", surface: "#23262e", border: "#2d3139", green: "#0ecb81", red: "#f6465d", muted: "#848e9c" }, fontFamily: { mono: ["JetBrains Mono", "monospace"] } } }, plugins: [] }
