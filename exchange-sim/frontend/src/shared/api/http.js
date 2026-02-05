@@ -18,7 +18,11 @@ export async function apiFetch(path, options = {}) {
   }
   if (!res.ok) {
     const err = await res.json().catch(() => ({}))
-    throw new Error(err.error || err.detail || res.statusText)
+    const firstError = Object.values(err)[0]
+    const errorMessage = typeof firstError === 'string' ? firstError
+      : Array.isArray(firstError) ? firstError[0]
+        : err.detail || err.error || res.statusText
+    throw new Error(errorMessage)
   }
   if (res.status === 204) return null
   return res.json()
