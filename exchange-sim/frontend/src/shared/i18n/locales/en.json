@@ -1,10 +1,8 @@
 {
-    "common": {
-        "loading": "Loading...",
-        "error": "Error",
-        "success": "Success",
-        "save": "Save",
-        "cancel": "Cancel"
+    "nav": {
+        "markets": "Markets",
+        "wallet": "Wallet",
+        "logout": "Logout"
     },
     "auth": {
         "login": "Login",
@@ -12,29 +10,46 @@
         "username": "Username",
         "email": "Email",
         "password": "Password",
-        "welcome": "Welcome Back",
-        "createAccount": "Create Account",
-        "noAccount": "Don't have an account?",
-        "haveAccount": "Already have an account?"
-    },
-    "nav": {
-        "markets": "Markets",
-        "trade": "Trade",
-        "wallet": "Wallet",
-        "logout": "Logout"
+        "confirm_password": "Confirm Password",
+        "already_have_account": "Already have an account?",
+        "dont_have_account": "Don't have an account?",
+        "login_button": "Sign In",
+        "register_button": "Sign Up"
     },
     "trade": {
-        "orderbook": "Order Book",
-        "lastPrice": "Last Price",
-        "24hChange": "24h Change",
-        "24hHigh": "24h High",
-        "24hLow": "24h Low",
-        "24hVol": "24h Volume",
         "buy": "Buy",
         "sell": "Sell",
         "price": "Price",
         "amount": "Amount",
         "total": "Total",
-        "time": "Time"
+        "market": "Market",
+        "limit": "Limit",
+        "available": "Available",
+        "order_book": "Order Book",
+        "recent_trades": "Recent Trades",
+        "chart": "Chart"
+    },
+    "wallet": "Wallet",
+    "wallet_deposit": "Deposit Funds",
+    "deposit_amount": "Deposit Amount",
+    "confirm_deposit": "Confirm Deposit",
+    "demo_mode_notice": "Demo mode: Funds are virtual",
+    "deposit_success": "Successfully deposited ${{amount}} USDT",
+    "language_changed": "Language changed successfully",
+    "logout": "Logout",
+    "timeframes": {
+        "1m": "1 Minute",
+        "5m": "5 Minutes",
+        "15m": "15 Minutes",
+        "1h": "1 Hour",
+        "4h": "4 Hours",
+        "1d": "1 Day"
+    },
+    "drawing_tools": {
+        "line": "Line",
+        "horizontal": "Horizontal Line",
+        "trend": "Trend Line",
+        "fibonacci": "Fibonacci",
+        "clear_all": "Clear All"
     }
 }

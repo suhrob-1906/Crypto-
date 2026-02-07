@@ -1,40 +1,55 @@
 {
-    "common": {
-        "loading": "Загрузка...",
-        "error": "Ошибка",
-        "success": "Успешно",
-        "save": "Сохранить",
-        "cancel": "Отмена"
+    "nav": {
+        "markets": "Рынки",
+        "wallet": "Кошелек",
+        "logout": "Выход"
     },
     "auth": {
-        "login": "Войти",
+        "login": "Вход",
         "register": "Регистрация",
         "username": "Имя пользователя",
         "email": "Email",
         "password": "Пароль",
-        "welcome": "С возвращением",
-        "createAccount": "Создать аккаунт",
-        "noAccount": "Нет аккаунта?",
-        "haveAccount": "Есть аккаунт?"
-    },
-    "nav": {
-        "markets": "Рынки",
-        "trade": "Торговля",
-        "wallet": "Кошелек",
-        "logout": "Выйти"
+        "confirm_password": "Подтвердите пароль",
+        "already_have_account": "Уже есть аккаунт?",
+        "dont_have_account": "Нет аккаунта?",
+        "login_button": "Войти",
+        "register_button": "Зарегистрироваться"
     },
     "trade": {
-        "orderbook": "Стакан",
-        "lastPrice": "Цена",
-        "24hChange": "Изм. 24ч",
-        "24hHigh": "Макс 24ч",
-        "24hLow": "Мин 24ч",
-        "24hVol": "Объем 24ч",
         "buy": "Купить",
         "sell": "Продать",
         "price": "Цена",
-        "amount": "Кол-во",
+        "amount": "Количество",
         "total": "Всего",
-        "time": "Время"
+        "market": "Рыночный",
+        "limit": "Лимитный",
+        "available": "Доступно",
+        "order_book": "Книга ордеров",
+        "recent_trades": "Последние сделки",
+        "chart": "График"
+    },
+    "wallet": "Кошелек",
+    "wallet_deposit": "Пополнить счет",
+    "deposit_amount": "Сумма пополнения",
+    "confirm_deposit": "Подтвердить пополнение",
+    "demo_mode_notice": "Демо режим: Средства виртуальные",
+    "deposit_success": "Успешно пополнено на ${{amount}} USDT",
+    "language_changed": "Язык успешно изменен",
+    "logout": "Выход",
+    "timeframes": {
+        "1m": "1 Минута",
+        "5m": "5 Минут",
+        "15m": "15 Минут",
+        "1h": "1 Час",
+        "4h": "4 Часа",
+        "1d": "1 День"
+    },
+    "drawing_tools": {
+        "line": "Линия",
+        "horizontal": "Горизонтальная линия",
+        "trend": "Трендовая линия",
+        "fibonacci": "Фибоначчи",
+        "clear_all": "Очистить все"
     }
 }
