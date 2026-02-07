@@ -4,9 +4,7 @@ import { useAuth } from './providers'
 import HeaderBar from '../widgets/HeaderBar'
 
 const AuthPage = lazy(() => import('../pages/AuthPage'))
-const MarketsPage = lazy(() => import('../pages/MarketsPage'))
 const TradePage = lazy(() => import('../pages/TradePage'))
-const WalletPage = lazy(() => import('../pages/WalletPage'))
 
 function Protected({ children }) {
   const { token } = useAuth()
@@ -36,9 +34,8 @@ export const router = [
     ),
     children: [
       { index: true, element: <Navigate to="/trade/BTCUSDT" replace /> },
-      { path: 'markets', element: <MarketsPage /> },
+      { path: 'trade', element: <TradePage /> },
       { path: 'trade/:symbol', element: <TradePage /> },
-      { path: 'wallet', element: <WalletPage /> },
     ],
   },
   { path: '*', element: <Navigate to="/" replace /> },
