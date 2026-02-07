@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { useMarketData } from '../features/markets/useMarketData';
 import MarketsSidebar from '../features/markets/MarketsSidebar';
 import OrderBook from '../features/orderbook/OrderBook';
@@ -7,7 +8,8 @@ import CandlesChart from '../features/chart/CandlesChart';
 import TradingPanel from '../features/trading/TradingPanel';
 
 const TradePage = () => {
-  const [selectedSymbol, setSelectedSymbol] = useState('BTCUSDT');
+  const { symbol: urlSymbol } = useParams();
+  const [selectedSymbol, setSelectedSymbol] = useState(urlSymbol || 'BTCUSDT');
   const { ticker, orderBook, trades } = useMarketData(selectedSymbol);
 
   // Update title

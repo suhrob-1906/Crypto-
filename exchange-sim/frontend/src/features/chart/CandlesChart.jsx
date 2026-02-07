@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { createChart, ColorType } from 'lightweight-charts';
+import { createChart, ColorType, LineStyle } from 'lightweight-charts';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const TIMEFRAMES = [
   { label: '1m', value: '1m' },
@@ -10,15 +11,26 @@ const TIMEFRAMES = [
   { label: '1D', value: '1d' },
 ];
 
+const DRAWING_TOOLS = [
+  { id: 'line', label: 'Line', icon: '📏' },
+  { id: 'horizontal', label: 'Horizontal', icon: '➖' },
+  { id: 'trend', label: 'Trend', icon: '📈' },
+  { id: 'fibonacci', label: 'Fibonacci', icon: '🔢' },
+];
+
 const CandlesChart = ({ symbol = 'BTCUSDT' }) => {
   const chartContainerRef = useRef(null);
   const chartRef = useRef(null);
   const candlestickSeriesRef = useRef(null);
   const volumeSeriesRef = useRef(null);
   const lineSeriesRef = useRef(null);
+  const drawingsRef = useRef([]);
 
   const [interval, setInterval] = useState('1h');
   const [mode, setMode] = useState('candles'); // 'candles' or 'line'
+  const [drawingMode, setDrawingMode] = useState(null);
+  const [isDrawing, setIsDrawing] = useState(false);
+  const [showDrawingTools, setShowDrawingTools] = useState(false);
 
   useEffect(() => {
     if (!chartContainerRef.current) return;
@@ -26,7 +38,7 @@ const CandlesChart = ({ symbol = 'BTCUSDT' }) => {
     const chart = createChart(chartContainerRef.current, {
       layout: {
         background: { type: ColorType.Solid, color: 'transparent' },
-        textColor: '#b7bdc6', // muted
+        textColor: '#b7bdc6',
       },
       grid: {
         vertLines: { color: '#2b3139' },
@@ -42,9 +54,12 @@ const CandlesChart = ({ symbol = 'BTCUSDT' }) => {
       rightPriceScale: {
         borderColor: '#2b3139',
       },
+      crosshair: {
+        mode: drawingMode ? 1 : 0, // Magnet mode when drawing
+      },
     });
 
-    // 1. Candlestick Series
+    // Candlestick Series
     const candlestickSeries = chart.addCandlestickSeries({
       upColor: '#0ecb81',
       downColor: '#f6465d',
@@ -54,24 +69,19 @@ const CandlesChart = ({ symbol = 'BTCUSDT' }) => {
     });
     candlestickSeriesRef.current = candlestickSeries;
 
-    // 2. Volume Series
+    // Volume Series
     const volumeSeries = chart.addHistogramSeries({
-      priceFormat: {
-        type: 'volume',
-      },
-      priceScaleId: '', // overlay
+      priceFormat: { type: 'volume' },
+      priceScaleId: '',
     });
     volumeSeries.priceScale().applyOptions({
-      scaleMargins: {
-        top: 0.8, // highest volume bar takes up bottom 20%
-        bottom: 0,
-      },
+      scaleMargins: { top: 0.8, bottom: 0 },
     });
     volumeSeriesRef.current = volumeSeries;
 
-    // 3. Line Series (Hidden by default)
+    // Line Series
     const lineSeries = chart.addLineSeries({
-      color: '#fcd535', // primary color
+      color: '#00d4aa',
       lineWidth: 2,
       visible: false,
     });
@@ -89,23 +99,17 @@ const CandlesChart = ({ symbol = 'BTCUSDT' }) => {
       window.removeEventListener('resize', handleResize);
       chart.remove();
     };
-  }, []);
+  }, [drawingMode]);
 
-  // Fetch Data on Symbol/Interval Change
+  // Fetch Data
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Using our backend proxy
-        // /api/markets/{symbol}/candles?interval={interval}&limit=1000
-        const res = await fetch(`http://localhost:8000/api/markets/${symbol}/candles/?interval=${interval}&limit=1000`);
+        const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
+        const res = await fetch(`${API_BASE_URL}/api/markets/${symbol}/candles/?interval=${interval}&limit=1000`);
         const data = await res.json();
 
         if (!Array.isArray(data)) return;
-
-        // Binance kline format: 
-        // [ openTime, open, high, low, close, volume, closeTime, ... ]
-        // Lightweight charts expects: { time, open, high, low, close }
-        // time must be in seconds for lightweight charts if using unix timestamp
 
         const candles = data.map(k => ({
           time: k[0] / 1000,
@@ -151,51 +155,174 @@ const CandlesChart = ({ symbol = 'BTCUSDT' }) => {
     }
   }, [mode]);
 
+  const handleDrawingTool = (toolId) => {
+    if (drawingMode === toolId) {
+      setDrawingMode(null);
+    } else {
+      setDrawingMode(toolId);
+    }
+  };
+
+  const clearDrawings = () => {
+    drawingsRef.current = [];
+    // In a real implementation, you would remove the drawings from the chart
+    // This requires more complex integration with lightweight-charts
+  };
+
   return (
     <div className="flex flex-col h-full bg-bg-1 relative">
       {/* Chart Toolbar */}
-      <div className="flex items-center justify-between px-4 py-2 border-b border-border bg-panel">
+      <motion.div
+        initial={{ y: -20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        className="flex items-center justify-between px-4 py-2 border-b border-border bg-panel"
+      >
         {/* Timeframes */}
         <div className="flex space-x-2">
-          {TIMEFRAMES.map(tf => (
-            <button
+          {TIMEFRAMES.map((tf, index) => (
+            <motion.button
               key={tf.value}
               onClick={() => setInterval(tf.value)}
-              className={`text-xs font-medium px-2 py-1 rounded hover:bg-surfaceHover transition-colors ${interval === tf.value ? 'text-primary' : 'text-textDim'}`}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ delay: index * 0.05 }}
+              className={`text-xs font-medium px-2 py-1 rounded hover:bg-surfaceHover transition-all duration-300 ${interval === tf.value ? 'text-primary bg-primary-soft shadow-glow-primary' : 'text-textDim'
+                }`}
             >
               {tf.label}
-            </button>
+            </motion.button>
           ))}
         </div>
 
-        {/* View Options */}
-        <div className="flex space-x-2 bg-bg-0 rounded p-0.5">
-          <button
-            onClick={() => setMode('candles')}
-            className={`p-1 rounded transition-colors ${mode === 'candles' ? 'bg-surface text-primary' : 'text-muted hover:text-text'}`}
-            title="Candlesticks"
+        {/* View Options & Drawing Tools */}
+        <div className="flex items-center space-x-2">
+          {/* Chart Type */}
+          <div className="flex space-x-2 bg-bg-0 rounded p-0.5">
+            <motion.button
+              onClick={() => setMode('candles')}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className={`p-1 rounded transition-all duration-300 ${mode === 'candles' ? 'bg-surface text-primary shadow-glow-primary' : 'text-muted hover:text-text'
+                }`}
+              title="Candlesticks"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M17 10H15V6H17V10ZM17 18H15V14H17V18ZM7 12H9V8H7V12ZM9 20H7V16H9V20ZM12 2H12.01V22H12V2Z" />
+              </svg>
+            </motion.button>
+            <motion.button
+              onClick={() => setMode('line')}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className={`p-1 rounded transition-all duration-300 ${mode === 'line' ? 'bg-surface text-primary shadow-glow-primary' : 'text-muted hover:text-text'
+                }`}
+              title="Line"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+              </svg>
+            </motion.button>
+          </div>
+
+          {/* Drawing Tools Toggle */}
+          <motion.button
+            onClick={() => setShowDrawingTools(!showDrawingTools)}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className={`p-2 rounded transition-all duration-300 ${showDrawingTools ? 'bg-primary text-bg-0 shadow-glow-primary' : 'bg-bg-0 text-text-2 hover:text-text-0'
+              }`}
+            title="Drawing Tools"
           >
-            {/* Candle Icon */}
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17 10H15V6H17V10ZM17 18H15V14H17V18ZM7 12H9V8H7V12ZM9 20H7V16H9V20ZM12 2H12.01V22H12V2Z" /></svg>
-          </button>
-          <button
-            onClick={() => setMode('line')}
-            className={`p-1 rounded transition-colors ${mode === 'line' ? 'bg-surface text-primary' : 'text-muted hover:text-text'}`}
-            title="Line"
-          >
-            {/* Line Icon */}
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12" /></svg>
-          </button>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M12 19l7-7 3 3-7 7-3-3z" />
+              <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z" />
+              <path d="M2 2l7.586 7.586" />
+              <circle cx="11" cy="11" r="2" />
+            </svg>
+          </motion.button>
         </div>
-      </div>
+      </motion.div>
+
+      {/* Drawing Tools Panel */}
+      <AnimatePresence>
+        {showDrawingTools && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="border-b border-border bg-surface overflow-hidden"
+          >
+            <div className="flex items-center space-x-2 px-4 py-2">
+              <span className="text-xs text-text-2 font-medium mr-2">Drawing Tools:</span>
+              {DRAWING_TOOLS.map((tool, index) => (
+                <motion.button
+                  key={tool.id}
+                  onClick={() => handleDrawingTool(tool.id)}
+                  whileHover={{ scale: 1.1, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ delay: index * 0.05 }}
+                  className={`flex items-center space-x-1 px-3 py-1.5 rounded text-xs font-medium transition-all duration-300 ${drawingMode === tool.id
+                      ? 'bg-primary text-bg-0 shadow-glow-primary'
+                      : 'bg-bg-2 text-text-2 hover:text-text-0 hover:bg-bg-3'
+                    }`}
+                  title={tool.label}
+                >
+                  <span>{tool.icon}</span>
+                  <span>{tool.label}</span>
+                </motion.button>
+              ))}
+              <div className="flex-1" />
+              <motion.button
+                onClick={clearDrawings}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-3 py-1.5 rounded text-xs font-medium bg-sell-soft text-sell hover:bg-sell hover:text-white transition-all duration-300"
+              >
+                Clear All
+              </motion.button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Drawing Mode Indicator */}
+      <AnimatePresence>
+        {drawingMode && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className="absolute top-20 left-1/2 -translate-x-1/2 z-10 px-4 py-2 bg-primary text-bg-0 rounded-lg shadow-glow-primary text-sm font-medium"
+          >
+            Drawing: {DRAWING_TOOLS.find(t => t.id === drawingMode)?.label} - Click on chart to draw
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Chart Container */}
-      <div className="flex-1 w-full relative" ref={chartContainerRef} />
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.2 }}
+        className="flex-1 w-full relative"
+        ref={chartContainerRef}
+        style={{ cursor: drawingMode ? 'crosshair' : 'default' }}
+      />
 
       {/* Watermark */}
-      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-primary opacity-5 pointer-events-none text-6xl font-black select-none">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.05 }}
+        transition={{ delay: 0.5 }}
+        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-primary pointer-events-none text-6xl font-black select-none"
+      >
         CryptoEx
-      </div>
+      </motion.div>
     </div>
   );
 };
