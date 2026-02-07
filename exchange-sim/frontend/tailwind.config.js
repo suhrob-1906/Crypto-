@@ -3,130 +3,118 @@ export default {
     theme: {
         extend: {
             colors: {
-                // CryptoEx Theme (Mapped to tokens.css)
-                background: "var(--color-bg-0)",
-                panel: "var(--color-bg-2)",
-                surface: "var(--color-bg-3)",
-                surfaceHover: "var(--color-bg-3)", // fallback/same
-                border: "var(--color-border-0)",
-                borderLight: "var(--color-border-1)",
+                // Backgrounds
+                'bg-0': 'var(--color-bg-0)',
+                'bg-1': 'var(--color-bg-1)',
+                'bg-2': 'var(--color-bg-2)',
+                'bg-3': 'var(--color-bg-3)',
+                surface: 'var(--color-surface)',
+                'surface-hover': 'var(--color-surface-hover)',
 
-                // Primary Colors
-                primary: "var(--color-primary)",
-                primaryDark: "var(--color-primary-hover)",
-                primaryLight: "var(--color-primary-soft)", // utilizing soft as light variant
+                // Borders
+                'border-0': 'var(--color-border-0)',
+                'border-1': 'var(--color-border-1)',
+                'border-subtle': 'var(--color-border-subtle)',
+                'border-focus': 'var(--color-border-focus)',
 
-                // Status Colors
-                green: "var(--color-trade-buy)",
-                greenDark: "var(--color-trade-buy-hover)",
-                greenLight: "var(--color-trade-buy-soft)",
-                red: "var(--color-trade-sell)",
-                redDark: "var(--color-trade-sell-hover)",
-                redLight: "var(--color-trade-sell-soft)",
+                // Text
+                'text-0': 'var(--color-text-0)',
+                'text-1': 'var(--color-text-1)',
+                'text-2': 'var(--color-text-2)',
+                'text-3': 'var(--color-text-3)',
+                'text-inverse': 'var(--color-text-inverse)',
 
-                blue: "#3742fa", // Keep or map if added to tokens
-                yellow: "#ffa502",
+                // Brand/Primary
+                primary: 'var(--color-primary)',
+                'primary-hover': 'var(--color-primary-hover)',
+                'primary-dark': 'var(--color-primary-dark)',
+                'primary-soft': 'var(--color-primary-soft)',
 
-                // Text Colors
-                muted: "var(--color-text-1)",
-                mutedLight: "var(--color-text-2)",
-                text: "var(--color-text-0)",
-                textDim: "var(--color-text-2)",
-                textInverse: "var(--color-text-inverse)",
+                // Trading Colors
+                buy: 'var(--color-buy)',
+                sell: 'var(--color-sell)',
+                'buy-hover': 'var(--color-buy-hover)',
+                'sell-hover': 'var(--color-sell-hover)',
+                'buy-soft': 'var(--color-buy-soft)',
+                'sell-soft': 'var(--color-sell-soft)',
+
+                // Status
+                success: 'var(--color-success)',
+                error: 'var(--color-error)',
+                warning: 'var(--color-warning)',
+                info: 'var(--color-info)',
+
+                // Legacy mappings for compatibility
+                background: 'var(--color-bg-0)',
+                panel: 'var(--color-bg-2)',
+                border: 'var(--color-border-0)',
+                text: 'var(--color-text-0)',
+                muted: 'var(--color-text-1)',
+                green: 'var(--color-buy)',
+                red: 'var(--color-sell)',
             },
             fontFamily: {
-                mono: ["JetBrains Mono", "monospace"],
-                sans: ["Inter", "system-ui", "sans-serif"],
+                mono: 'var(--font-mono)',
+                sans: 'var(--font-sans)',
+            },
+            fontSize: {
+                xs: 'var(--text-xs)',
+                sm: 'var(--text-sm)',
+                base: 'var(--text-base)',
+                lg: 'var(--text-lg)',
+                xl: 'var(--text-xl)',
+                '2xl': 'var(--text-2xl)',
+                '3xl': 'var(--text-3xl)',
+            },
+            borderRadius: {
+                sm: 'var(--radius-sm)',
+                DEFAULT: 'var(--radius-md)',
+                md: 'var(--radius-md)',
+                lg: 'var(--radius-lg)',
+                xl: 'var(--radius-xl)',
+                '2xl': 'var(--radius-2xl)',
+                full: 'var(--radius-full)',
             },
             boxShadow: {
-                'glow-primary': '0 0 20px rgba(0, 212, 170, 0.4)',
-                'glow-green': '0 0 20px rgba(0, 212, 170, 0.4)',
-                'glow-red': '0 0 20px rgba(255, 71, 87, 0.4)',
-                'card': '0 4px 12px rgba(0, 0, 0, 0.4)',
+                sm: 'var(--shadow-sm)',
+                DEFAULT: 'var(--shadow-md)',
+                md: 'var(--shadow-md)',
+                lg: 'var(--shadow-lg)',
+                xl: 'var(--shadow-xl)',
+                panel: 'var(--shadow-panel)',
+                'glow-primary': 'var(--shadow-glow-primary)',
+                'glow-buy': 'var(--shadow-glow-buy)',
+                'glow-sell': 'var(--shadow-glow-sell)',
             },
-            backgroundImage: {
-                'gradient-primary': 'linear-gradient(135deg, #00d4aa 0%, #1de9b6 100%)',
-                'gradient-green': 'linear-gradient(135deg, #00d4aa 0%, #1de9b6 100%)',
-                'gradient-red': 'linear-gradient(135deg, #ff4757 0%, #ee5a6f 100%)',
+            transitionTimingFunction: {
+                DEFAULT: 'var(--ease-default)',
+                in: 'var(--ease-in)',
+                out: 'var(--ease-out)',
+                bounce: 'var(--ease-bounce)',
+            },
+            transitionDuration: {
+                fast: 'var(--duration-fast)',
+                DEFAULT: 'var(--duration-normal)',
+                normal: 'var(--duration-normal)',
+                slow: 'var(--duration-slow)',
             },
             animation: {
-                'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                'pulse-fast': 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                'fade-in': 'fadeIn 0.5s ease-in-out',
-                'fade-in-up': 'fadeInUp 0.6s ease-out',
-                'fade-in-down': 'fadeInDown 0.6s ease-out',
-                'slide-up': 'slideUp 0.5s ease-out',
-                'slide-down': 'slideDown 0.5s ease-out',
-                'slide-left': 'slideLeft 0.5s ease-out',
-                'slide-right': 'slideRight 0.5s ease-out',
-                'scale-in': 'scaleIn 0.3s ease-out',
-                'bounce-in': 'bounceIn 0.6s ease-out',
-                'shimmer': 'shimmer 2s infinite',
-                'glow': 'glow 2s ease-in-out infinite',
-                'float': 'float 3s ease-in-out infinite',
-                'price-up': 'priceUp 0.5s ease-out',
-                'price-down': 'priceDown 0.5s ease-out',
+                'fade-in': 'fadeIn 0.3s ease-out',
+                'slide-up': 'slideUp 0.3s ease-out',
+                'scale-in': 'scaleIn 0.2s ease-out',
             },
             keyframes: {
                 fadeIn: {
                     '0%': { opacity: '0' },
                     '100%': { opacity: '1' },
                 },
-                fadeInUp: {
-                    '0%': { opacity: '0', transform: 'translateY(20px)' },
-                    '100%': { opacity: '1', transform: 'translateY(0)' },
-                },
-                fadeInDown: {
-                    '0%': { opacity: '0', transform: 'translateY(-20px)' },
-                    '100%': { opacity: '1', transform: 'translateY(0)' },
-                },
                 slideUp: {
-                    '0%': { transform: 'translateY(20px)', opacity: '0' },
+                    '0%': { transform: 'translateY(10px)', opacity: '0' },
                     '100%': { transform: 'translateY(0)', opacity: '1' },
-                },
-                slideDown: {
-                    '0%': { transform: 'translateY(-20px)', opacity: '0' },
-                    '100%': { transform: 'translateY(0)', opacity: '1' },
-                },
-                slideLeft: {
-                    '0%': { transform: 'translateX(20px)', opacity: '0' },
-                    '100%': { transform: 'translateX(0)', opacity: '1' },
-                },
-                slideRight: {
-                    '0%': { transform: 'translateX(-20px)', opacity: '0' },
-                    '100%': { transform: 'translateX(0)', opacity: '1' },
                 },
                 scaleIn: {
-                    '0%': { transform: 'scale(0.9)', opacity: '0' },
+                    '0%': { transform: 'scale(0.95)', opacity: '0' },
                     '100%': { transform: 'scale(1)', opacity: '1' },
-                },
-                bounceIn: {
-                    '0%': { transform: 'scale(0.3)', opacity: '0' },
-                    '50%': { transform: 'scale(1.05)' },
-                    '70%': { transform: 'scale(0.9)' },
-                    '100%': { transform: 'scale(1)', opacity: '1' },
-                },
-                shimmer: {
-                    '0%': { backgroundPosition: '-1000px 0' },
-                    '100%': { backgroundPosition: '1000px 0' },
-                },
-                glow: {
-                    '0%, 100%': { boxShadow: '0 0 20px rgba(0, 212, 170, 0.3)' },
-                    '50%': { boxShadow: '0 0 40px rgba(0, 212, 170, 0.6)' },
-                },
-                float: {
-                    '0%, 100%': { transform: 'translateY(0px)' },
-                    '50%': { transform: 'translateY(-10px)' },
-                },
-                priceUp: {
-                    '0%': { backgroundColor: 'rgba(0, 212, 170, 0)' },
-                    '50%': { backgroundColor: 'rgba(0, 212, 170, 0.3)' },
-                    '100%': { backgroundColor: 'rgba(0, 212, 170, 0)' },
-                },
-                priceDown: {
-                    '0%': { backgroundColor: 'rgba(255, 71, 87, 0)' },
-                    '50%': { backgroundColor: 'rgba(255, 71, 87, 0.3)' },
-                    '100%': { backgroundColor: 'rgba(255, 71, 87, 0)' },
                 },
             },
         },
