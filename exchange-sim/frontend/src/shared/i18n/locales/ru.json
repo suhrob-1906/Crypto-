@@ -37,6 +37,10 @@
     "deposit_success": "Успешно пополнено на ${{amount}} USDT",
     "language_changed": "Язык успешно изменен",
     "logout": "Выход",
+    "order_placed": "Ордер успешно размещен",
+    "error_invalid_amount": "Неверное количество",
+    "error_invalid_price": "Неверная цена",
+    "error_insufficient_balance": "Недостаточно средств",
     "timeframes": {
         "1m": "1 Минута",
         "5m": "5 Минут",

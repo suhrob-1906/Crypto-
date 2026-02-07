@@ -37,6 +37,10 @@
     "deposit_success": "Successfully deposited ${{amount}} USDT",
     "language_changed": "Language changed successfully",
     "logout": "Logout",
+    "order_placed": "Order Placed Successfully",
+    "error_invalid_amount": "Invalid amount",
+    "error_invalid_price": "Invalid price",
+    "error_insufficient_balance": "Insufficient balance",
     "timeframes": {
         "1m": "1 Minute",
         "5m": "5 Minutes",
