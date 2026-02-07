@@ -75,8 +75,27 @@ DATABASES = {
 }
 
 if os.environ.get("DATABASE_URL"):
-    import dj_database_url
-    DATABASES["default"] = dj_database_url.config(conn_max_age=60)
+    # If using Render Internal URL locally, fallback to SQLite
+    db_url = os.environ.get("DATABASE_URL")
+    if "dpg-" in db_url and "render.com" not in db_url and DEBUG:
+        print("Detected internal Render DATABASE_URL locally. Using SQLite fallback.")
+        DATABASES = {
+            "default": {
+                "ENGINE": "django.db.backends.sqlite3",
+                "NAME": BASE_DIR / "db.sqlite3",
+            }
+        }
+    else:
+        import dj_database_url
+        DATABASES["default"] = dj_database_url.config(conn_max_age=60)
+else:
+    # Default to SQLite if no DATABASE_URL
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
 
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},

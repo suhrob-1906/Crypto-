@@ -1,8 +1,8 @@
 from django.urls import path
-from .views import MarketListView, TickerView, CandlesView
+from . import views
 
 urlpatterns = [
-    path("", MarketListView.as_view()),
-    path("<str:symbol>/ticker/", TickerView.as_view()),
-    path("<str:symbol>/candles/", CandlesView.as_view()),
+    path("exchange-info/", views.ExchangeInfoView.as_view(), name="exchange-info"),
+    path("<str:symbol>/stats24h/", views.Ticker24hView.as_view(), name="stats-24h"),
+    path("<str:symbol>/candles/", views.KlinesView.as_view(), name="candles"),
 ]

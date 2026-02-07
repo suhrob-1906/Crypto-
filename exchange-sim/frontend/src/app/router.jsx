@@ -35,7 +35,7 @@ export const router = [
       </Protected>
     ),
     children: [
-      { index: true, element: <Navigate to="/markets" replace /> },
+      { index: true, element: <Navigate to="/trade/BTCUSDT" replace /> },
       { path: 'markets', element: <MarketsPage /> },
       { path: 'trade/:symbol', element: <TradePage /> },
       { path: 'wallet', element: <WalletPage /> },

@@ -1,0 +1,40 @@
+{
+    "common": {
+        "loading": "Загрузка...",
+        "error": "Ошибка",
+        "success": "Успешно",
+        "save": "Сохранить",
+        "cancel": "Отмена"
+    },
+    "auth": {
+        "login": "Войти",
+        "register": "Регистрация",
+        "username": "Имя пользователя",
+        "email": "Email",
+        "password": "Пароль",
+        "welcome": "С возвращением",
+        "createAccount": "Создать аккаунт",
+        "noAccount": "Нет аккаунта?",
+        "haveAccount": "Есть аккаунт?"
+    },
+    "nav": {
+        "markets": "Рынки",
+        "trade": "Торговля",
+        "wallet": "Кошелек",
+        "logout": "Выйти"
+    },
+    "trade": {
+        "orderbook": "Стакан",
+        "lastPrice": "Цена",
+        "24hChange": "Изм. 24ч",
+        "24hHigh": "Макс 24ч",
+        "24hLow": "Мин 24ч",
+        "24hVol": "Объем 24ч",
+        "buy": "Купить",
+        "sell": "Продать",
+        "price": "Цена",
+        "amount": "Кол-во",
+        "total": "Всего",
+        "time": "Время"
+    }
+}

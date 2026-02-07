@@ -1,0 +1,73 @@
+:root {
+    /* --- Colors: Backgrounds --- */
+    --color-bg-0: #0b0e11;
+    /* Main body background (Deepest) */
+    --color-bg-1: #151a23;
+    /* Secondary background */
+    --color-bg-2: #1e232f;
+    /* Panels / Cards */
+    --color-bg-3: #2b3139;
+    /* Inputs / Hovers */
+
+    /* --- Colors: Borders --- */
+    --color-border-0: #2b3139;
+    --color-border-1: #474d57;
+
+    /* --- Colors: Text --- */
+    --color-text-0: #eaecef;
+    /* Primary Text */
+    --color-text-1: #b7bdc6;
+    /* Secondary / Muted */
+    --color-text-2: #848e9c;
+    /* Tertiary / Disabled */
+    --color-text-inverse: #0b0e11;
+
+    /* --- Colors: Brand / Accents --- */
+    --color-primary: #fcd535;
+    /* Binance/Crypto Yellow-Gold */
+    --color-primary-hover: #f0b90b;
+    --color-primary-soft: rgba(252, 213, 53, 0.15);
+
+    /* --- Colors: Trading --- */
+    --color-trade-buy: #0ecb81;
+    /* Fresh Green */
+    --color-trade-sell: #f6465d;
+    /* Bright Red */
+    --color-trade-buy-hover: #32d993;
+    --color-trade-sell-hover: #ff707e;
+    --color-trade-buy-soft: rgba(14, 203, 129, 0.15);
+    --color-trade-sell-soft: rgba(246, 70, 93, 0.15);
+
+    /* --- Spacing (Scaling factor base 4px) --- */
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 20px;
+    --space-6: 24px;
+    --space-8: 32px;
+    --space-10: 40px;
+
+    /* --- Radius --- */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+    --radius-full: 9999px;
+
+    /* --- Shadows --- */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+    --shadow-panel: 0 8px 24px rgba(0, 0, 0, 0.4);
+
+    /* --- Transitions --- */
+    --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
+    --duration-fast: 150ms;
+    --duration-normal: 250ms;
+}
+
+/* Dark Mode Defaults (same as root for now, but ready for theme switching) */
+.dark {
+    /* Re-assign if needed */
+}
